@@ -1,0 +1,22 @@
+{
+    "coches": {
+        "1": {
+            "marca": "Toyota",
+            "modelo": "Corolla",
+            "disponible": true,
+            "usuarioID": null
+        },
+        "2": {
+            "marca": "Ford",
+            "modelo": "Fiesta",
+            "disponible": true,
+            "usuarioID": null
+        },
+        "3": {
+            "marca": "Honda",
+            "modelo": "Civic",
+            "disponible": true,
+            "usuarioID": null
+        }
+    }
+}
