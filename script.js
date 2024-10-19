@@ -149,4 +149,7 @@ function liberarCoche(id) {
 }
 
 // Llamar a la función para verificar el usuario al cargar la página
-document.addEventListener('DOMContentLoaded', verificarUsuario);
+document.addEventListener('DOMContentLoaded', () => {
+    verificarUsuario();
+    setInterval(cargarCoches, 3000);  // Recargar la lista de coches cada 3 segundos
+});
