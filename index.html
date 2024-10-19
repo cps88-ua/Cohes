@@ -4,135 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva de Coches</title>
-    <!-- Firebase App (versión sin módulos ES6) -->
+
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+
+    <!-- Firebase App (compatibilidad) -->
     <script src="https://www.gstatic.com/firebasejs/9.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.12.0/firebase-database-compat.js"></script>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyD482fzV2pvAxozp3rPJyRo4FQIBR-f234",
-            authDomain: "cochesperezserrano.firebaseapp.com",
-            databaseURL: "https://cochesperezserrano-default-rtdb.europe-west1.firebasedatabase.app/",
-            projectId: "cochesperezserrano",
-            storageBucket: "cochesperezserrano.appspot.com",
-            messagingSenderId: "663329452578",
-            appId: "1:663329452578:web:c9fe5cc3fb8285c800d07b"
-        };
-    
-        // Inicializa Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-    
-        // Generar un identificador único para el dispositivo
-        function getDeviceId() {
-            let deviceId = localStorage.getItem('deviceId');
-            if (!deviceId) {
-                deviceId = 'device-' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('deviceId', deviceId);
-            }
-            return deviceId;
-        }
-    
-        // Función para reservar un coche
-        function reservarCoche(cocheId, disponible) {
-            if (!disponible) {
-                alert("Este coche ya está reservado.");
-                return;
-            }
-    
-            const deviceId = getDeviceId();
-    
-            // Actualizamos el estado del coche a no disponible en la base de datos
-            const cocheRef = database.ref('coches/' + cocheId);
-            cocheRef.update({
-                disponible: false,
-                reservadoPor: deviceId
-            }).then(() => {
-                alert("¡Coche reservado con éxito!");
-            }).catch((error) => {
-                console.error("Error al reservar el coche: ", error);
-            });
-        }
-    
-        // Función para liberar un coche
-        function liberarCoche(cocheId, disponible) {
-            if (disponible) {
-                alert("Este coche ya está disponible.");
-                return;
-            }
-    
-            const deviceId = getDeviceId();
-    
-            // Verificar si el coche fue reservado por este dispositivo
-            const cocheRef = database.ref('coches/' + cocheId);
-            cocheRef.once('value').then((snapshot) => {
-                const cocheData = snapshot.val();
-                if (cocheData.reservadoPor === deviceId) {
-                    cocheRef.update({
-                        disponible: true,
-                        reservadoPor: null
-                    }).then(() => {
-                        alert("¡Coche liberado con éxito!");
-                    }).catch((error) => {
-                        console.error("Error al liberar el coche: ", error);
-                    });
-                } else {
-                    alert("No tienes permiso para liberar este coche.");
-                }
-            }).catch((error) => {
-                console.error("Error al verificar el coche: ", error);
-            });
-        }
-    
-        // Ejemplo de cómo añadir los botones a la lista de coches
-        function renderCoche(cocheId, coche) {
-            const cocheItem = document.createElement('div');
-            cocheItem.textContent = `${coche.marca} ${coche.modelo}`;
-    
-            const reservarBtn = document.createElement('button');
-            reservarBtn.textContent = "Reservar";
-            reservarBtn.disabled = !coche.disponible;
-    
-            const liberarBtn = document.createElement('button');
-            liberarBtn.textContent = "Liberar";
-            liberarBtn.disabled = coche.disponible;
-    
-            reservarBtn.onclick = () => {
-                reservarCoche(cocheId, coche.disponible);
-            };
-    
-            liberarBtn.onclick = () => {
-                liberarCoche(cocheId, coche.disponible);
-            };
-    
-            if (coche.disponible) {
-                cocheItem.appendChild(reservarBtn);
-            } else {
-                cocheItem.appendChild(liberarBtn);
-            }
-    
-            document.getElementById('cochesList').appendChild(cocheItem);
-        }
-    
-        // Ejemplo de cómo cargar y renderizar la lista de coches
-        function cargarCoches() {
-            const cochesRef = database.ref('coches');
-            cochesRef.on('value', (snapshot) => {
-                const coches = snapshot.val();
-                const cochesList = document.getElementById('cochesList');
-                cochesList.innerHTML = '';
-                for (const cocheId in coches) {
-                    renderCoche(cocheId, coches[cocheId]);
-                }
-            });
-        }
-    
-        document.addEventListener('DOMContentLoaded', cargarCoches);
-    </script>
+    <!-- Script principal -->
+    <script src="script.js" defer></script>
 </head>
 <body>
     <h1>Reserva de Coches</h1>
+    <h2 id="saludo"></h2>
     <ul id="cochesList"></ul>
+
 </body>
 </html>
-

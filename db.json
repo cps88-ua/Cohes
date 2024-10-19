@@ -1,22 +1,46 @@
 {
     "coches": {
-        "1": {
-            "marca": "Toyota",
-            "modelo": "Corolla",
-            "disponible": true,
-            "usuarioID": null
-        },
-        "2": {
-            "marca": "Ford",
-            "modelo": "Fiesta",
-            "disponible": true,
-            "usuarioID": null
-        },
-        "3": {
-            "marca": "Honda",
-            "modelo": "Civic",
-            "disponible": true,
-            "usuarioID": null
-        }
+      "coche1": {
+        "nombre": "Tesla Model 3",
+        "disponible": false,
+        "reservadoPor": ""
+      },
+      "coche2": {
+        "nombre": "BMW X1",
+        "disponible": false,
+        "reservadoPor": ""
+      },
+      "coche3": {
+        "nombre": "SEAT Ibiza",
+        "disponible": false,
+        "reservadoPor": ""
+      }
+    },
+    "personas": {
+      "persona1": {
+        "nombre": "Carlos",
+        "uids": ["uid-o21zm6g5g"]
+      },
+      "persona2": {
+        "nombre": "Papá",
+        "uids": []
+      },
+      "persona3": {
+        "nombre": "Mamá",
+        "uids": []
+      },
+      "persona4": {
+        "nombre": "Pablo",
+        "uids": []
+      }
+    },
+    "reservas": {
+      "reserva1": {
+        "cocheId": "",
+        "personaId": "",
+        "fechaInicio": "",
+        "fechaFin": ""
+      }
     }
-}
+  }
+  
